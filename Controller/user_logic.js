@@ -6,7 +6,7 @@ export async function createrUser(username,password){
     if(existingUser){
         throw new Error("user already exist, please login");
     }
-
+    
     const hashedPassword = await bcrypt.hash(password,10);
     const newUser = await User.create({
         username : username,

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Cart from "../Model/cart.js";
 
+//adds product to the cart
 export async function addProduct(productID,userID,quantity){
     const cartItem = await Cart.findOne({product_ID:productID, user_ID:userID});
     if(cartItem){
@@ -9,16 +10,16 @@ export async function addProduct(productID,userID,quantity){
         return cartItem;
     }
     else{
-        const newCartItem = Cart.create({
+        const newCartItem = await Cart.create({
             product_ID : productID,
             user_ID : userID,
             quantity : quantity
         });
-        await newCartItem.save();
-        return cartItem;
+        return newCartItem;
     }
 }
 
+//updates the product quantity of a product in the cart
 export async function updateProduct(quantity,id){
     const cartItem = await Cart.findById(id);
     if(cartItem){
@@ -31,10 +32,11 @@ export async function updateProduct(quantity,id){
     }
 }
 
+
+//deletes product from the cart
 export async function deleteProduct(id){
-    const cartItem = await Cart.findById(id);
+    const cartItem = await Cart.findByIdAndDelete(id);
     if(cartItem){
-        await Cart.findByIdAndDelete(id);
         return cartItem;
     }
     else{

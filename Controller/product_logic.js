@@ -1,5 +1,6 @@
 import { Product } from "../Model/product.js";
 
+//gets all the products from MongoDB
 export async function getProducts(){
     const products = await Product.find();
     if(products){
@@ -10,6 +11,8 @@ export async function getProducts(){
     }
 }
 
+
+//gets a product by id from MongoDB
 export async function getProduct(id) {
     const product = await Product.findById(id);
     if(product){
@@ -20,12 +23,14 @@ export async function getProduct(id) {
     }
 }
 
-export async function validateproductID(id) {
+
+//validates product
+export async function validateproductId(id) {
     const product = await Product.findById(id);
     if(product){
-        return true;
+        return product;
     }
     else{
-        throw new Error("Invalid Product id");
+        throw new Error("Invalid Product Id");
     }
 }
